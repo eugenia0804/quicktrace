@@ -116,6 +116,22 @@ def add_document_to_vector_store(file_knowledge):
     vector_store = st.session_state["vector_store"]
     chunks = file_knowledge.chunks
     vector_store.add_texts(chunks)
+    
+def generate_prompts(text):
+    """ Formulate recommended prompts for the user """
+
+    # llm = OpenAI()
+    temperature = st.session_state.temperature or 0.0
+    st.write(f"Temperature: {temperature}")
+    llm = OpenAI(temperature=temperature, model_name="gpt-3.5-turbo")
+    chain = load_qa_chain(llm, chain_type="stuff")
+
+    with open('promptGeneration.txt', 'r') as file:
+        prompt = file.read()
+    
+    response = chain.run(input_documents=text, question=prompt)
+    st.write(response)  
+
 
 def generate_response(user_question):
     if user_question:
