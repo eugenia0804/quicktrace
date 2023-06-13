@@ -30,3 +30,4 @@ Future:
 
 * Scheduled crawls to update data
 * Vizualizations of structured data
+* Prompt Generation for Starters
